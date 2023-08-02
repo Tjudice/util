@@ -1,7 +1,6 @@
 package concurrency_test
 
 import (
-	"concurrency"
 	"context"
 	"fmt"
 	"sync/atomic"
@@ -9,6 +8,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/trevorjudice/util/go/concurrency"
 )
 
 func TestDoNoError(t *testing.T) {
