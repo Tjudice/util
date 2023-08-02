@@ -3,7 +3,7 @@ package concurrency
 import (
 	"sync"
 
-	"github.com/trevorjudice/util/go/generic/priority"
+	"github.com/tjudice/util/go/generic/priority"
 )
 
 type PriorityQueue[T any] struct {

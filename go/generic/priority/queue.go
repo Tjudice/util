@@ -1,6 +1,6 @@
 package priority
 
-import "github.com/trevorjudice/util/go/generic/heap"
+import "github.com/tjudice/util/go/generic/heap"
 
 type Queue[T any] struct {
 	items []T

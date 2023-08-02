@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/trevorjudice/util/go/concurrency"
+	"github.com/tjudice/util/go/concurrency"
 )
 
 func TestDoNoError(t *testing.T) {

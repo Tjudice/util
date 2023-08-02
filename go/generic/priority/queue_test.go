@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/trevorjudice/util/go/generic/priority"
+	"github.com/tjudice/util/go/generic/priority"
 )
 
 func TestSimpleInsert(t *testing.T) {

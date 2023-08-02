@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/trevorjudice/util/go/concurrency"
+	"github.com/tjudice/util/go/concurrency"
 )
 
 func TestBasic(t *testing.T) {

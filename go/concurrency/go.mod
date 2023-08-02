@@ -1,4 +1,4 @@
-module github.com/trevorjudice/util/go/concurrency
+module github.com/tjudice/util/go/concurrency
 
 go 1.20
 

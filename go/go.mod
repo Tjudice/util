@@ -1,3 +1,3 @@
-module github.com/trevorjudice/util/go
+module github.com/tjudice/util/go
 
 go 1.20
