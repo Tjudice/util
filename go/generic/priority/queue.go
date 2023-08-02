@@ -11,6 +11,10 @@ func (p *Queue[T]) Len() int {
 	return len(p.items)
 }
 
+func (p *Queue[T]) Cap() int {
+	return cap(p.items)
+}
+
 func (p *Queue[T]) Less(i, j int) bool {
 	return p.less(p.items[i], p.items[j])
 }
@@ -44,6 +48,10 @@ func (p *PriorityQueue[T]) Pop() T {
 
 func (p *PriorityQueue[T]) Len() int {
 	return p.heap.Len()
+}
+
+func (p *PriorityQueue[T]) Cap() int {
+	return p.heap.Cap()
 }
 
 func NewPriorityQueue[T any](cap int, less func(T, T) bool) *PriorityQueue[T] {
