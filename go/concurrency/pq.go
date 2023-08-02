@@ -3,13 +3,12 @@ package concurrency
 import (
 	"sync"
 
-	"github.com/trevorjudice/util/go/generic/heap"
 	"github.com/trevorjudice/util/go/generic/priority"
 )
 
 type PriorityQueue[T any] struct {
 	m     sync.RWMutex
-	inner heap.Interface[T]
+	inner *priority.PriorityQueue[T]
 }
 
 func (p *PriorityQueue[T]) Len() int {
@@ -31,7 +30,7 @@ func (p *PriorityQueue[T]) Pop() T {
 }
 
 func NewPriorityQueue[T any](cap int, less func(T, T) bool) *PriorityQueue[T] {
-	queue := priority.NewQueue[T](cap, less)
+	queue := priority.NewPriorityQueue[T](cap, less)
 	return &PriorityQueue[T]{
 		inner: queue,
 	}

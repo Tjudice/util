@@ -30,11 +30,26 @@ func (p *Queue[T]) Pop() T {
 	return old
 }
 
-func NewQueue[T any](cap int, less func(T, T) bool) *Queue[T] {
+type PriorityQueue[T any] struct {
+	heap *Queue[T]
+}
+
+func (p *PriorityQueue[T]) Push(val T) {
+	heap.Push[T](p.heap, val)
+}
+
+func (p *PriorityQueue[T]) Pop() T {
+	return heap.Pop[T](p.heap)
+}
+
+func (p *PriorityQueue[T]) Len() int {
+	return p.heap.Len()
+}
+
+func NewPriorityQueue[T any](cap int, less func(T, T) bool) *PriorityQueue[T] {
 	queue := &Queue[T]{
 		items: make([]T, 0, cap),
 		less:  less,
 	}
-	heap.Init[T](queue)
-	return queue
+	return &PriorityQueue[T]{queue}
 }
