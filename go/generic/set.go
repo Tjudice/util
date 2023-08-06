@@ -10,9 +10,19 @@ type Set[T comparable] struct {
 
 func NewSet[T comparable](items []T) *Set[T] {
 	s := &Set[T]{
-		items: make(map[T]struct{}, len(items)),
+		items: make(map[T]struct{}),
 	}
 	s.Store(items...)
+	return s
+}
+
+func NewSetFn[T comparable, K any](items []K, fn func(K) T) *Set[T] {
+	s := &Set[T]{
+		items: make(map[T]struct{}),
+	}
+	for _, item := range items {
+		s.Store(fn(item))
+	}
 	return s
 }
 
