@@ -1,17 +1,17 @@
-package priority_test
+package generic_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tjudice/util/go/generic/priority"
+	"github.com/tjudice/util/go/generic"
 )
 
 func TestSimpleInsert(t *testing.T) {
 	cmp := func(i, j int64) bool {
 		return i > j
 	}
-	q := priority.NewPriorityQueue(10, cmp)
+	q := generic.NewPriorityQueue(10, cmp)
 	q.Push(3)
 	q.Push(4)
 	q.Push(17)

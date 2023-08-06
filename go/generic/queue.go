@@ -1,4 +1,4 @@
-package priority
+package generic
 
 import "github.com/tjudice/util/go/generic/heap"
 

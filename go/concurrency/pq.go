@@ -3,12 +3,12 @@ package concurrency
 import (
 	"sync"
 
-	"github.com/tjudice/util/go/generic/priority"
+	"github.com/tjudice/util/go/generic"
 )
 
 type PriorityQueue[T any] struct {
 	m     sync.RWMutex
-	inner *priority.PriorityQueue[T]
+	inner *generic.PriorityQueue[T]
 }
 
 func (p *PriorityQueue[T]) Len() int {
@@ -45,7 +45,7 @@ func (p *PriorityQueue[T]) TryPop() (T, bool) {
 }
 
 func NewPriorityQueue[T any](cap int, less func(T, T) bool) *PriorityQueue[T] {
-	queue := priority.NewPriorityQueue[T](cap, less)
+	queue := generic.NewPriorityQueue[T](cap, less)
 	return &PriorityQueue[T]{
 		inner: queue,
 	}
