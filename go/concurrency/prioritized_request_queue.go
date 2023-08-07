@@ -27,9 +27,10 @@ type response[V any] struct {
 
 func NewPrioritizedRequestQueue[T, V any](workers int, less func(i T, j T) bool, getter func(context.Context, T) (V, error)) *PrioritizedRequestQueue[T, V] {
 	o := &PrioritizedRequestQueue[T, V]{
-		pq:   NewPriorityQueue[request[T, V]](workers*10, makeLessFn[T, V](less)),
-		reqs: make(chan struct{}, workers),
-		done: make(chan struct{}),
+		pq:     NewPriorityQueue[request[T, V]](workers*10, makeLessFn[T, V](less)),
+		reqs:   make(chan struct{}, workers),
+		done:   make(chan struct{}),
+		getter: getter,
 	}
 	o.run(workers)
 	return o
