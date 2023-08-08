@@ -20,7 +20,7 @@ func Window[T any](preceding, following int, items []T) [][]T {
 		if followingIdx > len(items) {
 			followingIdx = len(items)
 		}
-		windows = append(windows, items[precedingIdx:followingIdx])
+		windows = append(windows, items[precedingIdx:followingIdx:followingIdx])
 	}
 	return windows
 }
