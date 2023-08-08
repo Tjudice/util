@@ -1,5 +1,7 @@
 package lambda
 
+import "github.com/tjudice/util/go/generic"
+
 func Window[T any](preceding, following int, items []T) [][]T {
 	windows := make([][]T, 0, len(items))
 	for i := range items {
@@ -15,15 +17,7 @@ func WindowFn[T any](preceding, following int, items []T, fn func([]T)) {
 }
 
 func makeWindow[T any](idx, preceding, following int, items []T) []T {
-	precedingIdx := idx - preceding
-	if precedingIdx < 0 {
-		precedingIdx = 0
-	}
-	followingIdx := idx + following + 1
-	if followingIdx > len(items) {
-		followingIdx = len(items)
-	}
-	return items[precedingIdx:followingIdx:followingIdx]
+	return items[generic.Max(idx-preceding, 0):generic.Min(idx+following+1, len(items))]
 }
 
 type Groupable interface {
