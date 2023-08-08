@@ -1,14 +1,5 @@
 package lambda
 
-// type WindowItem interface {
-// 	constraints.Integer | constraints.Float
-// }
-
-// // Assumes input array is sorted - Not sure its neccesary to add another function param?
-// func WindowSlice[T any, Unit WindowItem](start, end, length Unit, items []T, inside func(item T, i, j Unit)) [][]T {
-// 	return nil
-// }
-
 func Window[T any](preceding, following int, items []T) [][]T {
 	windows := make([][]T, 0, len(items))
 	for i := range items {
@@ -33,4 +24,8 @@ func makeWindow[T any](idx, preceding, following int, items []T) []T {
 		followingIdx = len(items)
 	}
 	return items[precedingIdx:followingIdx:followingIdx]
+}
+
+type Groupable interface {
+	Position()
 }
