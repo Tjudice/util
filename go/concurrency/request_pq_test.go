@@ -2,16 +2,17 @@ package concurrency_test
 
 import (
 	"context"
-	"log"
+	"math/rand"
 	"sync"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/tjudice/util/go/concurrency"
 )
 
 func TestPrioritizedRequestQueue(t *testing.T) {
-	v := []int{}
+	results := []int{}
 	m := sync.Mutex{}
 	getter := func(_ context.Context, i int) (int, error) {
 		// fill up pq requests initially
@@ -19,7 +20,7 @@ func TestPrioritizedRequestQueue(t *testing.T) {
 			time.Sleep(time.Second)
 			return 0, nil
 		}
-		time.Sleep(time.Duration(i) * time.Second)
+		time.Sleep(100 * time.Millisecond)
 		return i, nil
 	}
 	less := func(i int, j int) bool {
@@ -28,15 +29,19 @@ func TestPrioritizedRequestQueue(t *testing.T) {
 	ctx := context.TODO()
 	rpq := concurrency.NewPrioritizedRequestQueue(1, less, getter)
 	go rpq.Do(ctx, 0)
-	for i := 1; i < 4; i = i + 1 {
-		i := i
+	time.Sleep(50 * time.Millisecond)
+	for i := 1; i < 50; i = i + 1 {
+		i := rand.Intn(50)
 		go func() {
 			res, _ := rpq.Do(ctx, i)
 			m.Lock()
 			defer m.Unlock()
-			v = append(v, res)
+			results = append(results, res)
 		}()
 	}
 	time.Sleep(10 * time.Second)
-	log.Println(v)
+	lastValue := -1
+	for _, v := range results {
+		assert.LessOrEqual(t, lastValue, v, "results not properly ordered")
+	}
 }
