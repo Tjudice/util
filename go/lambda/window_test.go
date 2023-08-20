@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	lambda "github.com/tjudice/util/go/algorithms"
+	"github.com/tjudice/util/go/lambda"
 )
 
 func TestWindowSimple(t *testing.T) {
