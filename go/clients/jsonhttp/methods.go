@@ -8,7 +8,7 @@ import (
 )
 
 func Get[T any](ctx context.Context, cl *http.Client, url string, requestBody io.Reader) (resp T, err error) {
-	req, err := http.NewRequest(http.MethodGet, url, requestBody)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, requestBody)
 	if err != nil {
 		return resp, err
 	}
