@@ -2,6 +2,7 @@ package http_helpers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 )
 
@@ -76,10 +77,6 @@ func anyToString(value any) (string, error) {
 		bts, err := v.MarshalJSON()
 		return string(bts), err
 	default:
-		b, err := json.Marshal(v)
-		if err != nil {
-			return "", err
-		}
-		return string(b), nil
+		return string(fmt.Sprint(v)), nil
 	}
 }
