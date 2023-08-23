@@ -10,6 +10,7 @@ import (
 type UrlEncoder interface {
 	Add(key string, value ...any) UrlEncoder
 	Del(key string) UrlEncoder
+	AddIfNotDefault(key string, value any, defaultValue any) UrlEncoder
 	Encode() (string, error)
 	Get(key string) string
 	Has(key string) bool
