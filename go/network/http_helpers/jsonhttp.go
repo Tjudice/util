@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func DoJson[T any](ctx context.Context, cl *http.Client, url string, requestBody io.Reader) (resp T, err error) {
+func GetJSON[T any](ctx context.Context, cl *http.Client, url string, requestBody io.Reader) (resp T, err error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, requestBody)
 	if err != nil {
 		return resp, err
