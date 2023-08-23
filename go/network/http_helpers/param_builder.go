@@ -7,7 +7,7 @@ import (
 )
 
 type UrlEncoder interface {
-	Add(key string, value any) UrlEncoder
+	Add(key string, value ...any) UrlEncoder
 	Del(key string) UrlEncoder
 	Encode() (string, error)
 	Get(key string) string
@@ -28,13 +28,15 @@ func NewURLEncoder(url url.Values) UrlEncoder {
 	return &QueryStringBuilder{url, nil}
 }
 
-func (q *QueryStringBuilder) Add(key string, value any) UrlEncoder {
-	s, err := anyToString(value)
-	if err != nil {
-		q.err = err
-		return q
+func (q *QueryStringBuilder) Add(key string, values ...any) UrlEncoder {
+	for _, value := range values {
+		s, err := anyToString(value)
+		if err != nil {
+			q.err = err
+			continue
+		}
+		q.underlying.Add(key, s)
 	}
-	q.underlying.Add(key, s)
 	return q
 }
 
