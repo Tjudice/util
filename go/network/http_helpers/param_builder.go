@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"reflect"
 )
 
 type UrlEncoder interface {
@@ -38,6 +39,14 @@ func (q *QueryStringBuilder) Add(key string, values ...any) UrlEncoder {
 		q.underlying.Add(key, s)
 	}
 	return q
+}
+
+// Meant to be used to ignore default values without comparison equality checks
+func (q *QueryStringBuilder) AddIfNotDefault(key string, value any, defaultValue any) UrlEncoder {
+	if reflect.ValueOf(value).Equal(reflect.ValueOf(defaultValue)) {
+		return q
+	}
+	return q.Add(key, value)
 }
 
 func (q *QueryStringBuilder) Del(key string) UrlEncoder {
