@@ -9,22 +9,19 @@ import (
 )
 
 func TestAddString(t *testing.T) {
-	url := url.Values{}
-	q := http_helpers.NewURLEncoder(url)
+	q := http_helpers.NewURLEncoder(url.Values{})
 	q.Add("test", "hi")
 	assert.EqualValues(t, "hi", q.Get("test"))
 }
 
 func TestAddBytes(t *testing.T) {
-	url := url.Values{}
-	q := http_helpers.NewURLEncoder(url)
+	q := http_helpers.NewURLEncoder(url.Values{})
 	q.Add("test", []byte("hi"))
 	assert.EqualValues(t, "hi", q.Get("test"))
 }
 
 func TestAddNumberTypes(t *testing.T) {
-	url := url.Values{}
-	q := http_helpers.NewURLEncoder(url)
+	q := http_helpers.NewURLEncoder(url.Values{})
 	q.Add("int", 1)
 	q.Add("int8", int8(2))
 	q.Add("int16", int16(3))
@@ -52,10 +49,26 @@ func TestAddNumberTypes(t *testing.T) {
 }
 
 func TestDel(t *testing.T) {
-	url := url.Values{}
-	q := http_helpers.NewURLEncoder(url)
+	q := http_helpers.NewURLEncoder(url.Values{})
 	q.Add("test", "hi")
 	assert.EqualValues(t, "hi", q.Get("test"))
 	q.Del("test")
 	assert.EqualValues(t, "", q.Get("test"))
+}
+
+func TestEncodeSingle(t *testing.T) {
+	q := http_helpers.NewURLEncoder(url.Values{})
+	q.Add("test", "val1")
+	encoded, err := q.Encode()
+	assert.NoError(t, err)
+	assert.EqualValues(t, "test=val1", encoded)
+}
+
+func TestEncodeMultipleSameKey(t *testing.T) {
+	q := http_helpers.NewURLEncoder(url.Values{})
+	q.Add("test", "val1")
+	q.Add("test", "val2")
+	encoded, err := q.Encode()
+	assert.NoError(t, err)
+	assert.EqualValues(t, "test=val1&test=val2", encoded)
 }
