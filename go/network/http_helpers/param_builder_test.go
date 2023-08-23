@@ -8,21 +8,21 @@ import (
 	"github.com/tjudice/util/go/network/http_helpers"
 )
 
-func TestParamBuilderAddString(t *testing.T) {
+func TestAddString(t *testing.T) {
 	url := url.Values{}
 	q := http_helpers.NewURLEncoder(url)
 	q.Add("test", "hi")
-	assert.EqualValues(t, q.Get("test"), "hi")
+	assert.EqualValues(t, "hi", q.Get("test"))
 }
 
-func TestParamBuilderAddBytes(t *testing.T) {
+func TestAddBytes(t *testing.T) {
 	url := url.Values{}
 	q := http_helpers.NewURLEncoder(url)
 	q.Add("test", []byte("hi"))
-	assert.EqualValues(t, q.Get("test"), "hi")
+	assert.EqualValues(t, "hi", q.Get("test"))
 }
 
-func TestParamBuilderAddNumberTypes(t *testing.T) {
+func TestAddNumberTypes(t *testing.T) {
 	url := url.Values{}
 	q := http_helpers.NewURLEncoder(url)
 	q.Add("int", 1)
@@ -49,4 +49,13 @@ func TestParamBuilderAddNumberTypes(t *testing.T) {
 	assert.EqualValues(t, "10", q.Get("uint64"))
 	assert.EqualValues(t, "11.1", q.Get("float32"))
 	assert.EqualValues(t, "12.1", q.Get("float64"))
+}
+
+func TestDel(t *testing.T) {
+	url := url.Values{}
+	q := http_helpers.NewURLEncoder(url)
+	q.Add("test", "hi")
+	assert.EqualValues(t, "hi", q.Get("test"))
+	q.Del("test")
+	assert.EqualValues(t, "", q.Get("test"))
 }
