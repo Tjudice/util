@@ -1,4 +1,4 @@
-package jsonhttp
+package http_helpers
 
 import (
 	"context"
