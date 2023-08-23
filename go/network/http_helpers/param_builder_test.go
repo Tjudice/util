@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/tjudice/util/go/clients/http_helpers"
+	"github.com/tjudice/util/go/network/http_helpers"
 )
 
 func TestParamBuilderAddString(t *testing.T) {
