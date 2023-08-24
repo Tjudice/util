@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	"reflect"
 )
 
 type UrlEncoder interface {
 	Add(key string, value ...any) UrlEncoder
 	Del(key string) UrlEncoder
-	AddIfNotDefault(key string, value any, defaultValue any) UrlEncoder
+	AddCond(key string, value any, cond bool) UrlEncoder
 	Encode() (string, error)
 	Get(key string) string
 	Has(key string) bool
@@ -42,9 +41,9 @@ func (q *QueryStringBuilder) Add(key string, values ...any) UrlEncoder {
 	return q
 }
 
-// Meant to be used to ignore default values without comparison equality checks
-func (q *QueryStringBuilder) AddIfNotDefault(key string, value any, defaultValue any) UrlEncoder {
-	if reflect.ValueOf(value).Equal(reflect.ValueOf(defaultValue)) {
+// For easy inline use for param validity checks/ default value checks
+func (q *QueryStringBuilder) AddCond(key string, value any, cond bool) UrlEncoder {
+	if !cond {
 		return q
 	}
 	return q.Add(key, value)

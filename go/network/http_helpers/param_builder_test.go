@@ -72,3 +72,12 @@ func TestEncodeMultipleSameKey(t *testing.T) {
 	assert.NoError(t, err)
 	assert.EqualValues(t, "test=val1&test=val2", encoded)
 }
+
+func TestAddCond(t *testing.T) {
+	q := http_helpers.NewURLEncoder(url.Values{})
+	q.AddCond("test", "val1", "val1" == "val2")
+	q.AddCond("test", "val2", true)
+	encoded, err := q.Encode()
+	assert.NoError(t, err)
+	assert.EqualValues(t, "test=val2", encoded)
+}
